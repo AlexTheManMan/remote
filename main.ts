@@ -40,16 +40,16 @@ function adjustHue () {
 }
 radio.onReceivedValue(function (name, value) {
     if (name == "bright") {
-        kitronik_VIEW128x64.show("BRIGHTNESS: " + convertToText(Math.round(value)), 1)
+        kitronik_VIEW128x64.show("BRIGHTNESS: " + convertToText(Math.round(value)) + "  ", 1)
     }
     if (name == "hue") {
-        kitronik_VIEW128x64.show("HUE: " + convertToText(Math.round(value)), 2)
+        kitronik_VIEW128x64.show("HUE: " + convertToText(Math.round(value)) + "  ", 2)
     }
     if (name == "period") {
-        kitronik_VIEW128x64.show("PERIOD: " + ("" + convertToText(Math.round(value)) + " seconds"), 3)
+        kitronik_VIEW128x64.show("PERIOD: " + ("" + convertToText(Math.round(value)) + " S  "), 3)
     }
     if (name == "temp") {
-        kitronik_VIEW128x64.show("TEMPERATURE: " + ("" + convertToText(Math.round(value)) + " Celsius"), 4)
+        kitronik_VIEW128x64.show("TEMPERATURE: " + ("" + convertToText(Math.round(value)) + " C  "), 4)
     }
 })
 function adjustBrightness () {
@@ -78,6 +78,7 @@ let brightness = 0
 let roll = 0
 radio.setGroup(1)
 roll = 0
+let angle = 0
 brightness = 16
 HUE = 180
 let height_brightness = 128
