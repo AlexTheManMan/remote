@@ -8,7 +8,15 @@ function adjustPeriod () {
     }
     kitronik_VIEW128x64.setFontSize(kitronik_VIEW128x64.FontSelection.Big)
     kitronik_VIEW128x64.show("PERIOD    ", 1, kitronik_VIEW128x64.ShowAlign.Left)
-    kitronik_VIEW128x64.show("" + convertToText(period) + " S         ", 2, kitronik_VIEW128x64.ShowAlign.Left)
+    kitronik_VIEW128x64.show("" + toMinutesAndSeconds(period) + "           ", 2, kitronik_VIEW128x64.ShowAlign.Left)
+}
+function toMinutesAndSeconds (totalSeconds: number) {
+    minutes = convertToText(Math.round(totalSeconds / 60))
+    seconds = convertToText(totalSeconds % 60)
+    if (seconds.length <= 1) {
+        seconds = "0" + seconds
+    }
+    return "" + minutes + "m " + seconds + "s"
 }
 function adjustHue () {
     angle = input.rotation(Rotation.Roll)
@@ -41,7 +49,7 @@ radio.onReceivedValue(function (name, value) {
         period = Math.round(value)
         if (!(input.buttonIsPressed(Button.A)) && !(input.buttonIsPressed(Button.B))) {
             kitronik_VIEW128x64.setFontSize(kitronik_VIEW128x64.FontSelection.Normal)
-            kitronik_VIEW128x64.show("PERIOD: " + period + " S           ", 3)
+            kitronik_VIEW128x64.show("PERIOD: " + toMinutesAndSeconds(period) + "           ", 3)
         }
     }
     if (name == "temp") {
@@ -64,6 +72,8 @@ function adjustBrightness () {
     kitronik_VIEW128x64.show("BRIGHTNESS", 1, kitronik_VIEW128x64.ShowAlign.Left)
     kitronik_VIEW128x64.show("" + convertToText(brightness) + "         ", 2, kitronik_VIEW128x64.ShowAlign.Left)
 }
+let seconds = ""
+let minutes = ""
 let temp = 0
 let period = 0
 let hue = 0
