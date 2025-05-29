@@ -11,7 +11,7 @@ function adjustPeriod () {
     kitronik_VIEW128x64.show("" + toMinutesAndSeconds(period) + "           ", 2, kitronik_VIEW128x64.ShowAlign.Left)
 }
 function toMinutesAndSeconds (totalSeconds: number) {
-    minutes = convertToText(Math.round(totalSeconds / 60))
+    minutes = convertToText(Math.floor(totalSeconds / 60))
     seconds = convertToText(totalSeconds % 60)
     if (seconds.length <= 1) {
         seconds = "0" + seconds
@@ -80,14 +80,13 @@ let hue = 0
 let brightness = 0
 let angle = 0
 radio.setGroup(1)
-let roll = 0
 angle = 0
 brightness = 16
 hue = 180
 let height_brightness = 128
 period = 128
 temp = 0
-led.setBrightness(brightness)
+kitronik_VIEW128x64.show("A:HUE  B:BRIGHT AB:PERIOD", 8)
 basic.forever(function () {
     if (input.buttonIsPressed(Button.A) && !(input.buttonIsPressed(Button.B))) {
         adjustHue()
