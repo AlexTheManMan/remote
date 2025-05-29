@@ -38,6 +38,20 @@ function adjustHue () {
     )
     radio.sendValue("hue", HUE)
 }
+radio.onReceivedValue(function (name, value) {
+    if (name == "bright") {
+        kitronik_VIEW128x64.show("BRIGHTNESS: " + convertToText(Math.round(value)), 1)
+    }
+    if (name == "hue") {
+        kitronik_VIEW128x64.show("HUE: " + convertToText(Math.round(value)), 2)
+    }
+    if (name == "period") {
+        kitronik_VIEW128x64.show("PERIOD: " + ("" + convertToText(Math.round(value)) + " seconds"), 3)
+    }
+    if (name == "temp") {
+        kitronik_VIEW128x64.show("TEMPERATURE: " + ("" + convertToText(Math.round(value)) + " Celsius"), 4)
+    }
+})
 function adjustBrightness () {
     roll = input.rotation(Rotation.Roll)
     if (roll < 0) {
@@ -70,6 +84,7 @@ let height_brightness = 128
 period = 128
 led.setBrightness(brightness)
 basic.showString("A B AB")
+kitronik_VIEW128x64.controlDisplayOnOff(kitronik_VIEW128x64.onOff(true))
 basic.forever(function () {
     if (input.buttonIsPressed(Button.A) && !(input.buttonIsPressed(Button.B))) {
         adjustHue()
