@@ -74,7 +74,7 @@ radio.onReceivedValue(function (name, value) {
         temp = Math.round(value)
         if (!(input.buttonIsPressed(Button.A)) && !(input.buttonIsPressed(Button.B))) {
             kitronik_VIEW128x64.setFontSize(kitronik_VIEW128x64.FontSelection.Normal)
-            kitronik_VIEW128x64.show("TEMPERATURE: " + temp + " C               ", 4)
+            kitronik_VIEW128x64.show("TEMPERATURE: " + temp + " C        ", 4)
         }
     }
 })
