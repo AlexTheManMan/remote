@@ -1,16 +1,13 @@
 function printHints () {
+    kitronik_VIEW128x64.clear()
     if (sleepMode == 0) {
         kitronik_VIEW128x64.setFontSize(kitronik_VIEW128x64.FontSelection.Normal)
-        kitronik_VIEW128x64.clearLine(5)
-        kitronik_VIEW128x64.clearLine(6)
         kitronik_VIEW128x64.show("A:HUE           AB:PERIOD", 7)
         kitronik_VIEW128x64.show("B:BRIGHTNESS     LOGO:OFF", 8)
     } else {
         kitronik_VIEW128x64.setFontSize(kitronik_VIEW128x64.FontSelection.Big)
-        kitronik_VIEW128x64.clearLine(3)
-        kitronik_VIEW128x64.clearLine(4)
-        kitronik_VIEW128x64.show("PRESS LOGO TO", 3, kitronik_VIEW128x64.ShowAlign.Centre)
-        kitronik_VIEW128x64.show("TURN ON", 4, kitronik_VIEW128x64.ShowAlign.Centre)
+        kitronik_VIEW128x64.show("PRESS LOGO", 3, kitronik_VIEW128x64.ShowAlign.Centre)
+        kitronik_VIEW128x64.show("TO TURN ON", 4, kitronik_VIEW128x64.ShowAlign.Centre)
     }
 }
 function adjustPeriod () {
@@ -24,14 +21,6 @@ function adjustPeriod () {
     kitronik_VIEW128x64.setFontSize(kitronik_VIEW128x64.FontSelection.Big)
     kitronik_VIEW128x64.show("PERIOD    ", 1, kitronik_VIEW128x64.ShowAlign.Left)
     kitronik_VIEW128x64.show("" + toMinutesAndSeconds(period) + "           ", 2, kitronik_VIEW128x64.ShowAlign.Left)
-}
-function powerToggle () {
-    if (sleepMode == 1) {
-        radio.sendString("Sleep")
-    }
-    if (sleepMode == 0) {
-        radio.sendString("Wake")
-    }
 }
 function toMinutesAndSeconds (totalSeconds: number) {
     minutes = convertToText(Math.floor(totalSeconds / 60))
@@ -101,6 +90,13 @@ function adjustBrightness () {
     kitronik_VIEW128x64.show("BRIGHTNESS", 1, kitronik_VIEW128x64.ShowAlign.Left)
     kitronik_VIEW128x64.show("" + convertToText(brightness) + "         ", 2, kitronik_VIEW128x64.ShowAlign.Left)
 }
+input.onLogoEvent(TouchButtonEvent.Pressed, function () {
+    if (sleepMode == 0) {
+        radio.sendString("sleep")
+    } else {
+        radio.sendString("wake")
+    }
+})
 let seconds = ""
 let minutes = ""
 let temp = 0
@@ -120,16 +116,15 @@ temp = 0
 kitronik_VIEW128x64.controlDisplayOnOff(kitronik_VIEW128x64.onOff(true))
 printHints()
 basic.forever(function () {
-    if (input.buttonIsPressed(Button.A) && !(input.buttonIsPressed(Button.B))) {
-        adjustHue()
-    }
-    if (input.buttonIsPressed(Button.B) && !(input.buttonIsPressed(Button.A))) {
-        adjustBrightness()
-    }
-    if (input.buttonIsPressed(Button.AB)) {
-        adjustPeriod()
-    }
-    if (input.logoIsPressed()) {
-        powerToggle()
+    if (sleepMode == 0) {
+        if (input.buttonIsPressed(Button.A) && !(input.buttonIsPressed(Button.B))) {
+            adjustHue()
+        }
+        if (input.buttonIsPressed(Button.B) && !(input.buttonIsPressed(Button.A))) {
+            adjustBrightness()
+        }
+        if (input.buttonIsPressed(Button.AB)) {
+            adjustPeriod()
+        }
     }
 })
