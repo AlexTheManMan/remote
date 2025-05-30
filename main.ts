@@ -60,7 +60,7 @@ radio.onReceivedValue(function (name, value) {
         hue = Math.round(value)
         if (!(input.buttonIsPressed(Button.A)) && !(input.buttonIsPressed(Button.B))) {
             kitronik_VIEW128x64.setFontSize(kitronik_VIEW128x64.FontSelection.Normal)
-            kitronik_VIEW128x64.show("HUE: " + hue + "             ", 2)
+            kitronik_VIEW128x64.show("HUE: " + hue + "              ", 2)
         }
     }
     if (name == "period") {
